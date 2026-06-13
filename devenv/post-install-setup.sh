@@ -117,6 +117,8 @@ done
 
 echo "🎯 Dropbox milestone reached — safe to continue."
 
+bash /etc/nixos/devenv/claude/setup.sh
+
 
 
 

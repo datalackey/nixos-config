@@ -131,16 +131,23 @@ systemd.services.cups-browsed.enable = false;
     eval "$(direnv hook bash)"
   '';
 
+  programs.nix-ld.enable = true;
+
   environment.systemPackages = with pkgs; [
     gh          # github client tools
 
     nodejs                  # needed for GAS development  -- clasp .. gcloud etc
     google-cloud-sdk
 
+    vlc
+
 
     yt-dlp      # generic video downloader
 
     graphviz    # plant uml support, etc
+
+    cargo           # so we can do: cargo install --git https://github.com/asciinema/agg 
+    asciinema
 
     direnv
     tree
@@ -215,6 +222,8 @@ systemd.services.cups-browsed.enable = false;
     xdotool            # type into X
     # <<< end >>>
   ];
+
+
 
 
   environment.variables = {

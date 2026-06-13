@@ -1,0 +1,105 @@
+This document provides general, intentionally vendor-agnostic descriptions of the roles
+I typically assume when working with LLMs:
+
+    - developer (DEV)
+    - researcher (SEARCH)
+    - product marketer (PM)
+    - UI designer (UX)
+
+Each role is denoted via a fixed string token identifier which carries through in links
+across other LLM directive documents. Sub-roles inherit all aspects of parent roles
+unless explicitly stated otherwise, and sub-role names adhere to this pattern:
+<TOP-LEVEL-ROLE>-<SUB-ROLE>. Example: top level DEV, sub-role DEV-JS (for
+Javascript/TypeScript/Node projects).
+
+
+## ROLE: DEV
+
+DESCRIPTION: I am a very experienced software developer with a decent knowledge of
+mathematics through Vector Calculus, Probability/Statistics, Linear Algebra,
+and machine learning & LLM fundamentals.
+My development environment is NixOS/Linux and I prefer scripted solutions to
+any tasks likely to be repeated (rather than give me a set of files to create
+and commands to run: script the entire series of interactions — specifying
+file content inline if under 50 lines).
+Scripts should be written in Node.js — that is my main platform.
+I am interested in moving toward a 'lights out' software development model
+for applications that run on top of a GAS framework I am developing.
+
+
+NEAR TERM DIRECTIVES:
+(Revisit by 2027-01-01)
+
+* I am planning to sit for the Claude Architect exam -- 
+  so where relevant: suggest linkages and/or tie-ins to topics covered in this exam so I can anchor those
+  concepts to day-to-day development w
+
+
+DIRECTIVES:
+
+* If a session involves repeated back-and-forth that could have been specified
+  upfront as a single automated run, offer to suggest how
+  the task spec would be structured for lights-out execution.
+
+* Prefer explanations that summarize relationships via mathematical 
+formulas, as long as they assume no more than the math background described above.
+
+* When proposing solutions that require installation of packages (be they 
+JVM dependencies, node packages, python or whatever) I prefer 
+local installation over global installs so as not to pollute one environment 
+with another's preferences.  If the package is likely to be used in future workflows, 
+then provide suggestions as to how to make the dependency permanently expressed in 
+configuration (e.g. package.json files)
+
+* Design:
+-  In design stage, when considering options for a 'signifcant' refactor, bug fix or 
+   feature change (say: > 10 files, 100 LOC) try to break the proposed solution into stages 
+   where you outline incremental phases/steps toward the solution -- with exit from each 
+   phase gated by unit/system or tests.
+
+* Documentation
+-  Preserve existing comments unless they become factually incorrect due to the change — 
+   in that case, update the documentation minimally so diffs are reduced while preserving
+   accuracy.
+-  When working on a particular software project:  check the exact installed versions of 
+   top-level dependencies (e.g. from package.json on Node/JS platform). To make this concrete:
+   When working on any package with a corresponding package.json: before reading source files:
+   (1) read in all dependencies from that  package's package.json, (2) use Context7 to 
+   resolve docs for each top-level dependency listed there, (3) flag any version where 
+   my training data may differ from the installed version.
+   When Context7 has no coverage for a dependency, say so explicitly rather than
+   answering from training data alone.
+
+* Claude/Anthropic capability questions
+-  Invoke the claude-api skill before answering any Claude/Anthropic capability question. Additionally:
+   use Context7 to resolve @anthropic-ai/sdk for SDK-specific questions; flag any
+   capability marked preview/beta/experimental rather than presenting it as GA; if a
+   capability cannot be verified via retrieved docs, say so explicitly.
+
+* Coding
+-  Observe code formatting rules by applying any es-lint directives (or 
+   similar for JVM languages) that you may discover from project configuration. By
+   this I mean: actually apply my prefered formatting as part of making any change.
+-  When modifying files in a workspace:
+     > Changes under ~50 LOC: directly modify the file, show the diff
+       inline, and summarize what changed in one sentence.
+     > Changes over ~50 LOC: directly modify the files, and provide a brief per-file 
+       summary with a repository root-relative path reference to each 
+       changed file (e.g. `src/foo/bar.ts`)  
+-  As part of any proposed change: review README's relevant to that change and 
+   suggest updates: revising descriptions of any changed behavior, or adding new sections
+   for new features - preserving style of existing prose.
+
+*Debugging 
+- If two or three consecutive fix attempts fail, stop and do:
+  1. Enumerate alternative approaches (e.g., "do this locally"
+     instead of "fix the CI config")
+  2. Identify the smallest sub-unit that can be tested in isolation
+  3. Propose the reduced-scope path before continuing
+- Prefer local verification over CI feedback loops — CI is slow
+  and noisy; local reproduction is faster and more controllable.
+
+
+
+
+
